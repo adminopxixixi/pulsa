@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+    <!-- CSS Saya -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Font Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald&family=Pacifico&family=Poppins&display=swap" rel="stylesheet" />
+
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <link rel="icon" href="wifi.png" />
+
+    <title>Warung Ratu</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navsatu navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand mx-auto" href="#"> WARUNG RATU </a>
+      </div>
+    </nav>
+
+    <nav class="navbar navdua navbar-dark mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand mx-auto" href="#">
+          <div id="jam"></div>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Form -->
+    <section id="formpulsa">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <form name="jual-pulsa">
+              <div class="row g-2 justify-content-center">
+                <p id="juduldua" class="w-70 lead text-black my-1 fs-4 text-center fw-bold">CATATAN PULSA</p>
+                <hr class="text-info align-items-center" style="background-color: #03ac0e" />
+                <div class="mb-3 text-center fs-5">
+                  <label for="notelp" class="form-label text-center fw-bold">No Telepon</label>
+                  <input name="no telepon" type="number" class="form-control" id="notelp" aria-describedby="name" placeholder="..." required />
+                </div>
+                <div class="mb-3 text-center fs-5">
+                  <label for="nominal" class="form-label text-center fw-bold">Nominal</label>
+                  <input name="nominal" type="number" class="form-control" id="nominal" aria-describedby="name" placeholder="..." required />
+                </div>
+                <div class="mb-3 text-center fs-5">
+                  <label for="subject" class="form-label text-center fw-bold">Subject</label>
+                  <input name="subject" type="text" class="form-control" id="subject" aria-describedby="name" placeholder="..." required />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-kirim mb-5" style="background-color: #03ac0e; font-weight: bold">Kirim</button>
+              <div class="btn btn-loading mb-5 d-none" type="button" style="background-color: #03ac0e; cursor: progress">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="py-4 position-relative" style="background-color: #03ac0e">
+      <div class="container-md text-center text-dark fs-6">
+        <p class="my-0">&copy; Copyright <span class="fw-bold">warungratu</span>. All Rights Reserved.</p>
+        <p class="my-0">
+          Created & Design with
+          <span class="fw-bold">Bootstrap 5</span> by
+          <span class="fw-bold">@Egiditya.</span>
+        </p>
+      </div>
+    </footer>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Jam -->
+    <script src="clock.js"></script>
+
+    <!-- Google Sheet -->
+    <script>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbyCBM_gNoPEapxFUbKfZg5zDddyl1QBtloyC7WWNfbfxPsQw0Bee4H8YX6WzrgWrymJ/exec";
+      const form = document.forms["jual-pulsa"];
+      const btnKirim = document.querySelector(".btn-kirim");
+      const btnLoading = document.querySelector(".btn-loading");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        //ketika tombol kirim di klik
+        // tampilkan tombol loading hilangkan tombol kirim
+        btnLoading.classList.toggle("d-none");
+        btnKirim.classList.toggle("d-none");
+        fetch(scriptURL, { method: "POST", body: new FormData(form) })
+          .then((response) => {
+            // tampilkan tombol kirim hilangkan tombol loading
+            btnLoading.classList.toggle("d-none");
+            btnKirim.classList.toggle("d-none");
+            // tampilkan notif
+            swal({
+              title: "Terkirim",
+              text: "",
+              icon: "success",
+              button: "OKE",
+            });
+            // reset form
+            form.reset();
+            console.log("Success!", response);
+          })
+          .catch((error) => console.error("Error!", error.message));
+      });
+    </script>
+  </body>
+</html>

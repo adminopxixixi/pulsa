@@ -1,0 +1,21 @@
+body {
+  background-color: #e2edff;
+}
+
+.navsatu {
+  background-color: #03ac0e;
+  font-family: "trebuchet ms";
+  font-weight: bold;
+}
+
+.navdua {
+  background-color: #057e0d;
+  font-family: "trebuchet ms";
+  font-weight: bold;
+}
+
+#formpulsa hr {
+  width: 300px;
+  height: 4px;
+  opacity: 1;
+}
